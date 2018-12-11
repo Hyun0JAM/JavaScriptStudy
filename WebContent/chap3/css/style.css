@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+#underline {color: red;}
+
+img.productimg {width: 50px;
+                height: 50px;
+                cursor: pointer; }
+                
+.productname {font-size: 16pt;
+              font-weight: bold;}  
+              
+.productprice {font-size: 14pt;
+               color: blue;} 
+               
+.choice {font-size: 14pt;}
+
+.money1 {font-size: 14pt;
+         color: red;
+         font-weight: bold; }
+         
+.money2 {font-size: 14pt;
+         color: navy;
+         font-weight: bold; }                                                   
+
+table {width: 50%;}
+
+table, td {border: 1px solid gray;
+           border-collapse: collapse; 
+           padding: 3%;}
+           
+       

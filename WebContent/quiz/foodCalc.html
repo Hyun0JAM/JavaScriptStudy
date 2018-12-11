@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>음식계산서</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script type="text/javascript" src="../util/myutil.js"></script>
+<script type="text/javascript">
+  
+  function check(obj) {
+	  var objId = obj.id;
+	  var id = objId.substring(0 , objId.length-1);
+	  if(id == "foodName") { // 체크박스를 클릭한 경우
+		  var foodNameArr = document.getElementsByName("foodName");
+	      var num = "";
+		  for(var i=0; i<foodNameArr.length; i++) { 
+				if(foodNameArr[i] == obj) {
+					num = foodNameArr[i].id.substring(8); 
+					break;
+				}   
+	      }// end of for
+	      if(obj.checked) document.getElementById("foodOrdercnt"+num).value = "1";
+	      else document.getElementById("foodOrdercnt"+num).value = "0";
+	  }
+	  else if(id == "foodOrdercnt") { // 주문량을 클릭한 경우
+		  var foodOrdercntArr = document.getElementsByName("foodOrdercnt");
+	  	  var num = "";
+	      for(var i=0; i<foodOrdercntArr.length; i++) {
+	    	  if(foodOrdercntArr[i] == obj) {
+	    		 num = foodOrdercntArr[i].id.substring(12);
+	    		    // 만약에 id 가 "foodOrdercnt1" 이라면 숫자 1만을 뽑아온다.
+	    		 if(foodOrdercntArr[i].value != "0") document.getElementById("foodName"+num).checked = true;
+	    		 else document.getElementById("foodName"+num).checked = false;
+	    		 break;
+	    	  }// end of if
+	      }// end of for
+	  }// end of if~else
+	  calcSum();   
+  }// end function check(obj)
+
+  function calcSum() {  // 청구금액 구하기
+	  var sum = 0;
+	  var foodOrdercntArr = document.getElementsByName("foodOrdercnt");
+	  for(var i=0; i<foodOrdercntArr.length; i++) {
+		  var danga = document.getElementById("danga"+i).value; 
+		  // 단가를 하나씩 구해온다.
+		  sum += (parseInt(danga) * parseInt(foodOrdercntArr[i].value) ); 
+		  // 총금액을 구한다.
+	  }// end of for---------------------------------
+ 	  document.getElementById("totalMoney").value = addComma(sum);
+  }// end of function calcSum()--------------------------------------
+ 
+ function addComma(num) {
+		var str = String(num); // 먼저 숫자를 문자열 타입으로 바꾼다.
+		var result = "";
+		var len = str.length;
+		if(len > 3) { // 3자리 보다 클 경우에만
+			for(var i=len-1, j=1; i>=0; i--, j++) {
+				result = str.substring(i, i+1) + result; 
+				// 끝자리 부터 한개씩 합쳐나나간다. 
+				if(j%3==0) { // 그러다가 3의 배수가 되어지면 즉, 세자리마다 콤마를 더 붙여준다.
+					result = "," + result;					
+				}
+			}// end of for---------------------------
+		}
+		else { // 3자리 이하일 경우는
+			result = str;
+		} // end of if~else---------------------------------
+		if(result.indexOf(",")==0) {
+			result = result.substring(1); // 첫번째 , 를 제외하고서 끝까지를 가져온다.
+		}
+		return result;
+	}// end of function addComma(num)---------------------
+ 	
+ function AddComma(data_value) {
+ 	  return Number(data_value).toLocaleString('en');
+ 	  /*
+ 	  toLocaleString 은 Number 타입의 내장 함수이며, 
+ 	   인자로 들어온 지역 값에 따른 숫자 표기 방식을 적용하여, 
+ 	   문자열로 반환하는 역할을 합니다. 
+ 	  'en'은 영어권 국가의 숫가 표기 방식을 사용하겠다는 것을 지정한 것입니다. 
+ 	   미국이나 영어권 국가에서는 숫자를 표기할 때, 3자리마다 숫자를 끊어 콤마를 삽입하여 사용합니다.
+
+ 	   만약 지역 값을 입력하지 않고 호출하는 경우, 
+ 	   해당 시스템의 지역 값에 따라서 숫자가 표기되는데, 
+ 	   시스템에 따라서 뒤에 소수점 2자리가 붙는 경우가 있습니다.
+ 	   - Number("12345").toLocaleString('en'); ===> 12,345.00
+
+ 		이럴 때에는 단순히 소수점을 날려버리는 코드만 추가해 주시면 됩니다. 
+ 		- Number(data_value).toLocaleString('en').split(".")[0] ===> 12,345
+
+         숫자가 아닌, Date 타입도 toLocaleString 함수를 제공하는데, 
+         이 때에는 함수 인자값에 해당하는 지역의 Date 표기 형식의 값을 반환해줍니다.
+ 	 */  
+  }// end of function AddComma(data_value)--------------------
+
+  function order(frm){
+	  var totalMoney = document.getElementById("totalMoney").value;
+	  if(totalMoney == "0") {
+		  alert("식사류나 음료를 주문하셔야 합니다.");
+	  }
+	  else {
+	      frm.method="post";
+	      frm.action="order.jsp";
+	      frm.submit();
+	  }
+  }// end of function order(frm)-----------------------------
+</script>
+</head>
+<body>
+	<div align="center">
+	<h2 id="underline">계산서</h2>
+		<form name="frmData">
+			<table>
+				<tr>
+					<td class="title">식사류</td>
+					<td>
+						<input type="checkbox" id="foodName0" name="foodName" value="짜장면" onClick="check(this);"><label for="foodName0">짜장면(4,000)</label>&nbsp;
+						<input type="hidden" id="danga0" name="danga" value="4000" />
+						<input type="number" style="text-align: right;" id="foodOrdercnt0" name="foodOrdercnt" min="0" max="99" step="1" value="0" required onClick="check(this);" />
+						<!-- 
+							익스플러로의 경우 type="number" 는 지원되지 않으므로 일반적인 input 태그와 동일하다. 
+						    required : 해당 태그는 반드시 입력값이 있어야만 submit()을 수행한다.
+						    type="number" 사용할 경우 maxlength 속성 지정이 불가하다. 
+						       즉 다음과 같은 코드는 사용이 불가하다. <input type="number" maxlength="5" />-->
+						&nbsp;&nbsp;
+						<input type="checkbox" id="foodName1" name="foodName" value="짬뽕" onClick="check(this);"><label for="foodName1">짬뽕(5,000)</label>&nbsp;
+						<input type="hidden" id="danga1" name="danga" value="5000" />
+						<input type="number" style="text-align: right;" id="foodOrdercnt1" name="foodOrdercnt" min="0" max="99" step="1" value="0" required onClick="check(this);" />
+						
+						&nbsp;&nbsp;
+						<input type="checkbox" id="foodName2" name="foodName" value="볶음밥" onClick="check(this);"><label for="foodName2">볶음밥(6,000)</label>&nbsp;
+						<input type="hidden" id="danga2" name="danga" value="6000" />
+						<input type="number" style="text-align: right;" id="foodOrdercnt2" name="foodOrdercnt" min="0" max="99" step="1" value="0" required onClick="check(this);" />
+					</td>
+				</tr>
+				<tr>
+				<td class="title">음료</td>
+					<td>
+						<input type="checkbox" id="foodName3" name="foodName" value="사이다" onClick="check(this);"><label for="foodName3">사이다(1,000)</label>&nbsp;
+						<input type="hidden" id="danga3" name="danga" value="1000" />
+						<input type="number" style="text-align: right;" id="foodOrdercnt3" name="foodOrdercnt" min="0" max="99" step="1" value="0" required onClick="check(this);" />
+						&nbsp;&nbsp;
+						<input type="checkbox" id="foodName4" name="foodName" value="콜라" onClick="check(this);"><label for="foodName4">콜라(1,000)</label>&nbsp;
+						<input type="hidden" id="danga4" name="danga" value="1000" />
+						<input type="number" style="text-align: right;" id="foodOrdercnt4" name="foodOrdercnt" min="0" max="99" step="1" value="0" required onClick="check(this);" />
+						&nbsp;&nbsp;
+						<input type="checkbox" id="foodName5" name="foodName" value="커피" onClick="check(this);"><label for="foodName5">커피(2,000)</label>&nbsp;
+						<input type="hidden" id="danga5" name="danga" value="2000" />
+						<input type="number" style="text-align: right;" id="foodOrdercnt5" name="foodOrdercnt" min="0" max="99" step="1" value="0" required onClick="check(this);" />
+					</td>
+				</tr>
+				<tr align="center">
+				<td class="title">청구금액</td>
+					<td>
+						<input type="text" style="text-align: center; border-style: hidden; font-size: 15pt; font-weight: bold; color: maroon;" id="totalMoney" name="totalMoney" size="15" value="0"> 원
+					</td>
+				</tr>
+				<tr align="center">
+					<td colspan="2">
+						<input type="button" value="주문" onClick="order(frmData);">&nbsp;
+						<input type="reset" value="취소">&nbsp;
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

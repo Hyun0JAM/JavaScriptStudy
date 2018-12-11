@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>1-3 회원가입</title>
+
+<style type="text/css">
+/* style 태그 */
+
+#underline {text-decoration: underline;
+			color: #004d00;} /* #+id 값{text+ 하고자 하는 것 삽입} */ 
+			
+ table{border:1px solid #666699;
+	 border-collapse: collapse;
+	 width: 50%;
+	  margin-top : 3%; 
+	  margin-bottom: 3%; } 
+	 /* table{} : 문서상의 모든 테이블 태그
+	 border-collapse: collapse; : 은 셀간격을 없애겠다는 말이다. */
+
+ td{border:1px solid #666699;
+	padding:2%; }
+	/* padding : 안쪽 여백 / margin ㅣ 바깥 여백*/
+
+ colgroup#firstCol {width : 20%;  /* 전체 테이블의 20% */ 
+				   background-color: #b3ffb3;
+				   }
+ .title{font-size: 14pt;
+ 		font-weight: bold;
+ 		color: green;}
+ input {line-height : 150% } /* 기본의 3배 */
+.btn{width: 8%;
+	height : 40px;
+	background-color:#b3ffb3;
+	color: green;
+	font-size: 13pt;
+	font-weight: bold;
+	border: none; }
+	.registerbtn{margin-right: 5%;}
+</style>
+
+<script type="text/javascript">
+ 	function goSubmit(){
+ 		var userid = window.document.frmMemberRegister.userid.value.trim();//window 생략가능
+ 		
+ 		if(userid.length == 0){
+ 			alert("ID가 입력되지 않았습니다.");
+ 			window.document.frmMemberRegister.userid.value ="";//입력된 공백의 값을 지운다
+ 			window.document.frmMemberRegister.userid.focus(); //포커스를 준다.
+ 			//goSubmit() 종료
+ 	 		return;
+ 		}
+ 		
+ 		var password1 = window.document.frmMemberRegister.password1.value.trim();
+ 		var password2 = window.document.frmMemberRegister.password2.value.trim();
+ 		
+ 		if(!(password1.length >0 && password2.length > 0 && password1 == password2) ){
+ 		
+ 			alert("암호입력과 암호확인을 동일하게  입력하세요.");
+
+ 			document.frmMemberRegister.password1.value ="";
+ 			document.frmMemberRegister.password2.value ="";
+ 			document.frmMemberRegister.password1.focus();
+ 	
+ 			return;
+ 		}
+	
+ 		var name = window.document.frmMemberRegister.name.value.trim();
+		if(name.length == 0){
+			alert("이름을 입력하세요.");
+			document.frmMemberRegister.name.value ="";
+ 			document.frmMemberRegister.name.focus();
+ 			return;
+		}
+ 		
+		var email = window.document.frmMemberRegister.email.value.trim();
+		if(email.length == 0){
+			alert("이메일을 입력하세요.");
+			document.frmMemberRegister.email.value ="";
+ 			document.frmMemberRegister.email.focus();
+ 			return;
+		}
+ 		
+		var firstel = window.document.frmMemberRegister.firstel.value.trim();
+		var secondtel = window.document.frmMemberRegister.secondtel.value.trim();
+		var thirdtel = window.document.frmMemberRegister.thirdtel.value.trim();
+		
+		if(!(firstel.length  > 0 && secondtel > 0 && thirdtel> 0)){
+			alert("전화번호를 입력하세요.");
+ 			document.frmMemberRegister.firstel.value ="";
+ 			document.frmMemberRegister.secondtel.value ="";
+ 			document.frmMemberRegister.thirdtel.value ="";
+ 			document.frmMemberRegister.firstel.focus();
+			return ;
+		}
+		
+		var addr = document.frmMemberRegister.addr.value.trim();
+		
+		if(addr.length ==0 ){
+			alert("주소를 입력하세요.");
+ 			document.frmMemberRegister.addr.value ="";
+ 			document.frmMemberRegister.addr.focus();
+			return ;
+		}
+		
+		document.frmMemberRegister.submit();//frmMemberRegister form을 전송하자라는 의미.
+		//frmMemberRegister 에 입력되어진 데이터 값을 memberRegister.jsp 페이지로 전송한다.
+		
+ 	}
+  		
+</script>
+
+</head>
+<body>
+
+<div align="center" style = "border:0px solid red;  margin-top: 5%; "> <!-- align="center" : 가운데정렬 /  <div> : 구역 나누기 -->
+<!-- margin: 100px ==> 상, 우 , 하 , 자 방향으르 100px 정도를 떨어뜨린다  -->
+<!-- margin-right: 100px ==> 오른쪽에만 여백을 주겠다. -->
+
+<h2 id="underline">회원가입</h2> <!-- h1 : 헤드 라인 (1~6까지 있음. 숫자가 클수록 글자크기 작아짐) // id="underline" : 아이디가 underline이다.--> 
+
+<form name ="frmMemberRegister" action="memberRegister.jsp" method = "post" >
+
+<!-- 
+	 method = "get"  : 주소창 확인 시 '?' 를 중심으로 왼쪽은 url , 오른쪽은 데이터를 실어 보내는 방식.  >> 보안성 떨어짐. 
+	  ex)http://localhost:9090/JavaScriptStudy/chap1/memberRegister.jsp
+	  	 ?userid=ddd&password1=111&password2=111&name=sddd&email=dddd&firstel=111&secondtel=111&thirdtel=1111&teltype=%ED%95%B8%EB%93%9C%ED%8F%B0&addr=2222
+	 
+	 
+	 method = "post" : 로그인 후 웹브라우져 주소창에 정보를 보내는 것이 아니라 본문에 숨겨서 보내는 방식.  >> 보안성 올라감.
+	  ex)http://localhost:9090/JavaScriptStudy/chap1/memberRegister.jsp
+	 
+	 !!안쓰면 기본이 get 방식임.!!-->
+
+	<table>
+	<colgroup span="1" id = "firstCol"></colgroup> <!-- sapn="1" 은 첫번째 컬럼 // <colgroup span="1" id = "firstCol"> 첫번째 칼럼을 그룹화 하였다. -->
+		<tr>
+			<td class="title">ID</td> 
+			<td><input type="text" name = "userid" size="20" maxlength="20" /></td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">암호</td> 
+			<td><input type = "password" name = "password1" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">암호확인</td> 
+			<td><input type = "password" name = "password2" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+				<tr>
+			<td class="title">이름</td> 
+			<td><input type = "text" name = "name" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">e메일</td> 
+			<td><input type = "text" name = "email" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">전화번호</td> 
+			<td>
+			<input type = "tel" name = "firstel" size = "5" maxlength="3"/>&nbsp;-&nbsp;<input type = "tel" name = "secondtel" size = "5" maxlength="4"/>&nbsp;-&nbsp;<input type = "tel" name = "thirdtel" size = 5 maxlength="4" />
+			   <span style = "margin-left : 10%; ">
+			   <input type="radio" id = "mobile"  name="teltype" value="핸드폰" checked><label for="mobile">핸드폰</label>&nbsp;
+			   <input type="radio" id = "hometel" name="teltype" value="집"><label for="hometel">집</label>&nbsp;
+			   <input type="radio" id = "jobtel" name="teltype" value="직장"><label for="jobtel">직장</label></span> <!-- &nbsp; : 공백 -->
+			</td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">주소</td> 
+			<td><input type = "text" name = "addr" size="50" maxlength="100" /></td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+			
+	</table>	
+	<input class = "btn registerbtn" type="button" value="가입하기" width="5" onClick="goSubmit();" />
+	 <!-- class가 btn 이면서 registerbtn이다 -->
+	<!-- onClick="goSubmit();" : 가입하기 버튼을 누르면 goSubmit() 함수 호출 -->
+	<input class = "btn" type="reset" value="지우기" width="5">
+</form>
+</div>
+</body>
+</html>

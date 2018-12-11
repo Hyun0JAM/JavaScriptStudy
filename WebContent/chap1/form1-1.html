@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>1-1 회원가입</title>
+
+<style type="text/css">
+/* style 태그 */
+
+#underline {text-decoration: underline;
+			color: #004d00;} /* #+id 값{text+ 하고자 하는 것 삽입} */ 
+			
+ table{border:1px solid #666699;
+	 border-collapse: collapse;
+	 width: 50%;
+	  margin-top : 3%; 
+	  margin-bottom: 3%; } 
+	 /* table{} : 문서상의 모든 테이블 태그
+	 border-collapse: collapse; : 은 셀간격을 없애겠다는 말이다. */
+
+ td{border:1px solid #666699;
+	padding:2%; }
+	/* padding : 안쪽 여백 / margin ㅣ 바깥 여백*/
+
+ colgroup#firstCol {width : 20%;  /* 전체 테이블의 20% */ 
+				   background-color: #b3ffb3;
+				   }
+ .title{font-size: 14pt;
+ 		font-weight: bold;
+ 		color: green;}
+ input {line-height : 150% } /* 기본의 3배 */
+.btn{width: 8%;
+	height : 40px;
+	background-color:#b3ffb3;
+	color: green;
+	font-size: 13pt;
+	font-weight: bold;
+	border: none; }
+	.registerbtn{margin-right: 5%;}
+</style>
+
+<script type="text/javascript">
+ 	function goSubmit(){
+ 		
+  		
+ 		var useridval = document.frmMemberRegister.userid.value; /* frmMemberRegister 문서에 있는userid 의 value 값*/
+ 		/* java script 에서  var 의 변수 userid 는 뒤의 value 값에 의해서 정해진다. 
+ 			,즉 value 값이 숫자면 var 의 타입이 숫자이고, value 값이 문자면 var의 타입은 문자이다.
+ 			java script 에서 변수는 정해져 있지 않다.
+ 			
+ 		   >>> Java Script 에서는 data type이 정해져 있지 않고, 입력되어지는 데이터 값에 따라 데이터 타입이 정해진다.<<<
+ 		   	  1. undefined : 변수가 정의되지 않거나 값이 없을때
+ 		   	  2. number	   : 데이터 타입이 숫자일 때 
+ 		   	  3. String    : 데이터 타입이 문자열일 때
+ 		   	  4. boolean   : 데이터 타입이 true,false 일떄
+ 		   	  5. object	   : 데이터 타입이 객체 또는 배열 일떄
+ 		   	   
+ 		   	  변수의 타입을 알아보는 것은 typeof 변수명을 하면 해당 변수의 타입을 알아볼수 있다.
+ 		   */
+ 		
+ 		alert(useridval);
+ 		
+ 		alert(typeof useridval); /* typeof useridval : String */
+ 		
+ 		alert(typeof price); /* undefined */
+ 		
+ 		var point = "97";
+ 		alert(point);//97
+ 		alert(typeof point);/*String*/
+ 		
+ 		point = parseInt(point);
+ 		// 문자열 point 를 정수로 변환한것.
+ 		alert(typeof point);/*number*/
+ 		
+ 		point = "92.456";
+ 		alert(point);//92.456
+ 		alert(typeof point);/*String*/
+ 		
+ 		point = point + 1.1; // 이때 + sms 문자열 결합이다.
+ 		alert(point);//92.4561.1 이 나온다
+ 		
+ 		point = "92.456"
+ 		point = parseFloat(point);
+ 		alert(point+1.1); //92.556
+ 		// 이때의 + 는 더하기이다
+ 		
+ 		alert(typeof point);//number
+ 		
+ 		
+ 		alert("korea"+useridval+"seoul");//공백제거 X
+ 		alert(useridval.length);// length : 문자열의 길이를 알려줌
+ 		/*ex :	userid 	 :   abcd    ;
+ 				출력 		 : korea___abcd____seoul
+ 				문자열 크기  : 20*/
+ 		useridval = document.frmMemberRegister.userid.value.trim(); // trim() : 공백제거
+ 		
+ 		alert("korea"+useridval+"seoul");//좌우공백제거 O
+ 		alert(useridval.length);
+ 		/*ex :	userid 	 :   abcd    ;
+			출력 		 : koreaabcdseoul
+			문자열 크기  : 4*/
+			
+ 		if(useridval.length == 0){ //공백제거 했을 떄
+ 			alert("ID가 입력되지 않았습니다.");
+ 		}
+ 		else{
+ 			alert("ID가 입력되었습니다.");
+ 		}
+ 		
+ 	}//end of goSubmit();
+</script>
+
+</head>
+<body>
+
+<div align="center" style = "border:0px solid red;  margin-top: 5%; "> <!-- align="center" : 가운데정렬 /  <div> : 구역 나누기 -->
+<!-- margin: 100px ==> 상, 우 , 하 , 자 방향으르 100px 정도를 떨어뜨린다  -->
+<!-- margin-right: 100px ==> 오른쪽에만 여백을 주겠다. -->
+
+<h2 id="underline">회원가입</h2> <!-- h1 : 헤드 라인 (1~6까지 있음. 숫자가 클수록 글자크기 작아짐) // id="underline" : 아이디가 underline이다.--> 
+
+<form name ="frmMemberRegister" action="memberRegister.jsp" >
+	<table>
+	<colgroup span="1" id = "firstCol"></colgroup> <!-- sapn="1" 은 첫번째 컬럼 // <colgroup span="1" id = "firstCol"> 첫번째 칼럼을 그룹화 하였다. -->
+		<tr>
+			<td class="title">ID</td> 
+			<td><input type="text" name = "userid" size="20" maxlength="20" /></td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">암호</td> 
+			<td><input type = "password" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">암호확인</td> 
+			<td><input type = "password" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+				<tr>
+			<td class="title">이름</td> 
+			<td><input type = "text" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">e메일</td> 
+			<td><input type = "text" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">전화번호</td> 
+			<td>
+			<input type = "tel" size = "5" maxlength="3"/>&nbsp;-&nbsp;<input type = "tel" size = "5" maxlength="4"/>&nbsp;-&nbsp;<input type = "tel"size = 5 maxlength="4" />
+			   <span style = "margin-left : 10%; ">
+			   <input type="radio" id = "mobile"  name="teltype" value="핸드폰" checked><label for="mobile">핸드폰</label>&nbsp;
+			   <input type="radio" id = "hometel" name="teltype" value="집"><label for="hometel">집</label>&nbsp;
+			   <input type="radio" id = "jobtel" name="teltype" value="직장"><label for="jobtel">직장</label></span> <!-- &nbsp; : 공백 -->
+			</td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">주소</td> 
+			<td><input type = "text" size="50" maxlength="100" /></td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+			
+	</table>	
+	<input class = "btn registerbtn" type="button" value="가입하기" width="5" onClick="goSubmit();" />
+	 <!-- class가 btn 이면서 registerbtn이다 -->
+	<!-- onClick="goSubmit();" : 가입하기 버튼을 누르면 goSubmit() 함수 호출 -->
+	<input class = "btn" type="reset" value="지우기" width="5">
+</form>
+</div>
+</body>
+</html>

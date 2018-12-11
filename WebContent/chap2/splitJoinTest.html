@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>split()와 join()에 대해서 알아봅니다.</title>
+<style>
+button{
+	border: none;
+	padding:5px 10px;
+	background-color:white;
+	border : 1px dotted #FFC0CB	;
+	margin:10px;
+}
+button:hover{
+	background-color: #FFBCB9;
+}
+#printFruit{
+	margin-top:5%;
+	text-align:center;
+	border: 1px solid green;
+	padding:5px;
+	line-height:35px;/* 각 줄의 높이를 정함 */
+}
+</style>
+<script type="text/javascript">
+	function goArray(){
+		var arr = ["김보현","최현영","차지석","정구현","양정구"];
+		for(var i=0;i<arr.length;i++){
+			console.log((i+1)+"."+arr[i]);
+		}
+	}
+	function goSplit(){
+		var names = "배수미,       이지민,최수욱,     김우철,거의다";
+		var nameArr = names.split(","); /* 구분자를 통해 나눠서 배열에 저장 */
+		for(var i=0;i<nameArr.length;i++){
+			console.log((i+6)+"."+nameArr[i].trim());
+		}
+	}
+	function goJoin(){
+		var nameArr = ["이고은","이지예","이현재","김기복","백승범"];
+		var names = nameArr.join("/");/* join()은 배열을 구분자를 통해 하나의 문자열로 반환함 */
+		console.log(names);
+	}
+	function goJoin2(){
+		var nameArr = new Array();
+		nameArr.push("유민후");
+		nameArr.push("김상원");
+		nameArr.push("이영미");
+		nameArr.push("홍윤성");
+		nameArr.push("장동수");
+		console.log(nameArr.join(" "));
+	}
+	function goFruit(){
+		var fruit = document.getElementById("fruit").innerHTML;
+		var arr = fruit.split(","); 
+		for(var i=0;i<arr.length;i++){
+			document.getElementById("printFruit").innerHTML += (i+1)+"."+arr[i].trim()+"<br>";
+		}
+	}
+	function goReset(){
+		document.getElementById("printFruit").innerHTML ="";
+	}
+</script>
+</head>
+<body>
+	<div style="border: 1px solid blue; margin-top:5%; padding: 10px 0; padding-left:30%; font-weight:bold;">
+		<span id="fruit">사과, 귤, 딸기, 토마토, 수박, 배, 참외</span>
+	</div>
+	<div style="border:1px solid red; margin-top:5%; padding-left:15%;">
+		<button type="button" onClick="goArray();" style="">Array</button>
+		<button type="button" onClick="goSplit();" style="">Split</button>
+		<button type="button" onClick="goJoin();" style="">Join</button>
+		<button type="button" onClick="goJoin2();" style="">Join2</button>
+		<button type="button" onClick="goFruit();" style="">Fruit</button>
+		<button type="button" onClick="goReset();" style="">FruitReset</button>
+	</div>
+	<div id="printFruit"></div>
+</body>
+</html>

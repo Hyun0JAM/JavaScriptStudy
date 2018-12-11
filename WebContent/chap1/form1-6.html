@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>1-6 회원가입(정규표현식을 사용한 이메일 유효성 검사)</title>
+
+<style type="text/css">
+/* style 태그 */
+
+#underline {
+	text-decoration: underline;
+	font-size:2em;
+	color: darkgray;} /* #+id 값{text+ 하고자 하는 것 삽입} */ 			
+table{
+	border:1px solid lightgray;
+	border-collapse: collapse;
+	width: 750px;
+	margin-top : 3%; 
+	margin-bottom: 3%; } 
+	 /* table{} : 문서상의 모든 테이블 태그
+	 border-collapse: collapse; : 은 셀간격을 없애겠다는 말이다. */
+td{
+	border:1px solid lightgray;
+	padding:2%; }
+	/* padding : 안쪽 여백 / margin ㅣ 바깥 여백*/
+colgroup#firstCol {
+	width : 20%;  /* 전체 테이블의 20% */ 
+	background-color: lightgrey;}
+.title{
+ 	font-weight: bold;
+ 	color: black;}
+input {line-height : 150% } /* 기본의 3배 */
+.btn{
+	width: 120px;
+	height : 40px;
+	background-color:lightgray;
+	color: black;
+	font-weight: bold;
+	border: none; }
+.btn:hover{
+	background-color: darkgray;
+	color:white;
+}
+.registerbtn{margin-right: 5%;}
+</style>
+<script type="text/javascript" src="/JavaScriptStudy/util/myutil.js"></script>
+<script type="text/javascript" >
+ 	function goSubmit(){
+ 		var bool =false;
+ 		var userid = document.getElementById("userid").value.trim();//id 가 userid인 value값을 얻어온다.
+ 		
+ 		if(userid.length == 0){
+ 			alert("ID가 입력되지 않았습니다.");
+ 			document.getElementById("userid").value="";
+			document.getElementById("userid").focus(); //포커스를 준다.
+ 			//goSubmit() 종료
+ 	 		return;
+ 		}
+ 		
+ 		var regexp_password = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).*$/g;
+ 		// 암호는 8글자 이상 15글자 이하 내에서 영문자 숫자 특수기호가 혼합되어야만 올바른 암호로 받아주는 것이다.
+ 		var password1 = document.getElementById("password1").value.trim();
+ 		bool = regexp_password.test(password1);
+ 		if(!bool){
+ 			alert("암호는 8글자 이상 15글자 이하 내에서 영문자,숫자,특수기호가 혼합되어야만 합니다.");
+ 			return;// 종료
+ 		}
+ 		var password2 = document.getElementById("password2").value;
+ 		
+ 		if(password1 != password2){
+ 			alert("암호입력과 암호확인을 동일하게  입력하세요.");
+ 			document.getElementById("password1").value ="";
+ 			document.getElementById("password2").value ="";
+ 			document.getElementById("password1").focus();
+ 			return;
+ 		}
+	
+ 		var name = document.getElementById("name").value.trim();
+ 		
+		if(name.length == 0){
+			alert("이름을 입력하세요.");
+			document.getElementById("name").value ="";
+			document.getElementById("name").focus();
+ 			return;
+		}
+
+		var regexp_jubun = /^[0-9]+$/; // 숫자로만 되어있는지 정규표현식
+		var jubun1 = document.getElementById("jubun1").value.trim();
+		var jubun2 = document.getElementById("jubun2").value.trim();
+		var bool1 = regexp_jubun.test(jubun1);
+		var bool2 = regexp_jubun.test(jubun2);
+		
+		if(bool1&&bool2){ // 주민번호 공식에 맞는지 틀리는지 검사하겠다.
+			var n = func_checkJubun(jubun1+jubun2); // '/JavaScriptStudy/util/myutil.js'에 정의된 함수(WebContent는 없는걸로 본다.)
+			if(n==0) {
+				alert("올바른 주민번호를 입력하세요");
+				document.getElementById("jubun1").value="";
+				document.getElementById("jubun2").value="";
+				document.getElementById("jubun1").focus();
+				return;
+			}
+		}
+ 		else{
+			alert("주민번호는 숫자로만 입력해 주세요");
+			document.getElementById("jubun1").value="";
+			document.getElementById("jubun2").value="";
+			return;
+		}
+		
+		var regexp_email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i; 
+		var email = document.getElementById("email").value;
+		bool = regexp_email.test(email); //정규표현식 객체.test(검사할 대상의 데이터 값); 을하면 표현식에 올바른 데이터이라면 true가 나오고,표현식에 맞지않는 데이터 이라면 flase.
+		if(!bool){
+			alert("이메일형식에 맞도록 입력하세요.");
+			document.getElementById("email").value ="";
+			document.getElementById("email").focus();
+ 			return;
+		}
+		var regexp_number = /^[0-9]+$/; // 숫자로만 되어있는지 정규표현식
+ 		
+		var firstel =  document.getElementById("firstel").value.trim();
+		var secondtel = document.getElementById("secondtel").value.trim();
+		var thirdtel = document.getElementById("thirdtel").value.trim();
+		
+		var bool_1 = regexp_number.test(firstel);
+		var bool_2 = regexp_number.test(secondtel);
+		var bool_3 = regexp_number.test(thirdtel);
+		
+		if(!(bool_1 && bool_2 && bool_3)){
+			alert("전화번호가 숫자로만 입력되어야합니다.");
+			document.getElementById("firstel").value ="";
+			document.getElementById("secondtel").value ="";
+			document.getElementById("thirdtelfirstel").value ="";
+			document.getElementById("firstel").focus();
+			return ;
+		}
+		
+		var addr = document.getElementById("addr").value.trim();
+		
+		if(addr.length ==0 ){
+			alert("주소를 입력하세요.");
+			document.getElementById("addr").value ="";
+			document.getElementById("addr").focus();
+			return ;
+		}
+		
+		
+		var frm = document.frmMemberRegister;//객체타입
+		console.log("typeof frm : "+typeof frm);//typeof frm : object	
+		
+		frm.method = "post"; //frm 의 방식.
+		frm.action = "memberRegister.jsp"//객체의 속성값
+ 		frm.submit();// 함수 호출 : 전송
+ 	}
+  		
+</script>
+
+</head>
+<body>
+
+<div align="center" style = "border:0px solid red;  margin-top: 5% ;"> <!-- align="center" : 가운데정렬 /  <div> : 구역 나누기 -->
+<!-- margin: 100px ==> 상, 우 , 하 , 자 방향으르 100px 정도를 떨어뜨린다  -->
+<!-- margin-right: 100px ==> 오른쪽에만 여백을 주겠다. -->
+
+<h2 id="underline">회원가입</h2> <!-- h1 : 헤드 라인 (1~6까지 있음. 숫자가 클수록 글자크기 작아짐) // id="underline" : 아이디가 underline이다.--> 
+
+<form name ="frmMemberRegister" >
+
+<!-- 
+	 method = "get"  : 주소창 확인 시 '?' 를 중심으로 왼쪽은 url , 오른쪽은 데이터를 실어 보내는 방식.  >> 보안성 떨어짐. 
+	  ex)http://localhost:9090/JavaScriptStudy/chap1/memberRegister.jsp
+	  	 ?userid=ddd&password1=111&password2=111&name=sddd&email=dddd&firstel=111&secondtel=111&thirdtel=1111&teltype=%ED%95%B8%EB%93%9C%ED%8F%B0&addr=2222
+	 
+	 
+	 method = "post" : 로그인 후 웹브라우져 주소창에 정보를 보내는 것이 아니라 본문에 숨겨서 보내는 방식.  >> 보안성 올라감.
+	  ex)http://localhost:9090/JavaScriptStudy/chap1/memberRegister.jsp
+	 
+	 !!안쓰면 기본이 get 방식임.!!-->
+
+	<table>
+	<colgroup span="1" id = "firstCol"></colgroup> <!-- sapn="1" 은 첫번째 컬럼 // <colgroup span="1" id = "firstCol"> 첫번째 칼럼을 그룹화 하였다. -->
+		<tr>
+			<td class="title">ID</td> 
+			<td><input type="text" name="userid" id = "userid" size="20" maxlength="20" required placeholder="sample@abc.com"/></td> <!-- 컬럼 --><!-- required가들어가면 필수작성해야함  -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">암호</td> 
+			<td><input type = "password" name = "password1" id= "password1" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">암호확인</td> 
+			<td><input type = "password" name = "password2" id = "password2" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+				<tr>
+			<td class="title">이름</td> 
+			<td><input type = "text" name = "name" id= "name" size="20" maxlength="20" required ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">주민번호</td> 
+			<td>
+				<input type = "text" name = "jubun1" id= "jubun1" size="10" maxlength="6" required /> - 
+				<input type = "password" name = "jubun2" id= "jubun2" size="10" maxlength="7" required />
+			</td>
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">e메일</td> 
+			<td><input type = "text" name = "email" id = "email" size="20" maxlength="20" ></input> </td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">전화번호</td> 
+			<td>
+			<input type = "tel" name = "firstel" id = "firstel" size = "5" maxlength="3"/>&nbsp;-&nbsp;<input type = "tel" name = "secondtel" id = "secondtel" size = "5" maxlength="4"/>&nbsp;-&nbsp;<input type = "tel" name = "thirdtel" id = "thirdtel" size = 5 maxlength="4" />
+			   <span style = "margin-left : 10%; ">
+			   <input type="radio" id = "mobile"  name="teltype" value="핸드폰" checked><label for="mobile">핸드폰</label>&nbsp;
+			   <input type="radio" id = "hometel" name="teltype" value="집"><label for="hometel">집</label>&nbsp;
+			   <input type="radio" id = "jobtel" name="teltype" value="직장"><label for="jobtel">직장</label></span> <!-- &nbsp; : 공백 -->
+			</td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+		<tr>
+			<td class="title">주소</td> 
+			<td><input type = "text" name = "addr" id = "addr" size="50" maxlength="100" /></td> <!-- 컬럼 -->
+		</tr> <!-- 행 -->
+			
+	</table>	
+	<input class = "btn registerbtn" type="button" value="가입하기" width="5" onClick="goSubmit();" />
+	 <!-- class가 btn 이면서 registerbtn이다 -->
+	<!-- onClick="goSubmit();" : 가입하기 버튼을 누르면 goSubmit() 함수 호출 -->
+	<input class = "btn" type="reset" value="지우기" width="5">
+</form>
+</div>
+</body>
+</html>

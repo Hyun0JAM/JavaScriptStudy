@@ -1,0 +1,185 @@
+------------------chap1----------------------------------------
+1) 이벤트소스.bind("click", 이벤트핸들링); 와
+     이벤트소스.click(이벤트핸들링)의 사용법						
+   ==>  1bind-1.html, 1bind-2.html
+      
+2) 이벤트소스.bind("dblclick", 이벤트핸들링); 와
+     이벤트소스.dblclick(이벤트핸들링)의 사용법						
+   ==>  2bind-1.html, 2bind-2.html
+      
+3) html(), text(), val(), 
+   html("데이터"), text("데이터"), val("데이터"),
+     선택자.hide() 와 선택자.show()
+     함수의 뜻과 사용방법
+   ==>  3TextHtmlVal.html
+
+------------------chap2----------------------------------------
+1) 이벤트소스.unbind("click", 이벤트핸들링);  
+     버튼을 한번 클릭하여 이벤트 발생한 이후 다음번 클릭에는 이벤트 비활성화 시키기(unbind) 
+   ==> 1unbind.html
+
+------------------chap3----------------------------------------
+1) 마우스를 눌렀을때(mousedown)와 땠을때(mouseup)의 이벤트 발생
+   === !!!! 중요 !!!! ===
+   /*
+	  선택자변수.is("선택자") 은 true 또는 false 를 나타내어주는데
+	  선택자변수가 "선택자"와 일치하는 엘리먼트(태그)이라면 true 이고
+	  선택자변수가 "선택자"와 다르면 엘리먼트(태그)이라면 false 이다. 
+   */
+   
+   ==> 1mousedownMouseup.html
+									
+------------------chap4----------------------------------------
+1) 클릭시 이미지 띄우기 / mouseover, mouseout 시 이미지 띄우기 					
+     연예인 사진 보이기 / 감추기(함수 setImage(imgFilename)를 만들어 사용함)
+   ==> setImage.html , setImageMouseoverMouseout.html
+   
+------------------chap5----------------------------------------
+1) 이벤트 발생시 선택자에 css 속성부여하기
+     선택자.css({속성1:값1,
+                       속성2:값2,
+                       속성3:값3});  
+   ==> 1css.html
+   
+2) 이벤트 발생시 선택자에 addClass("클래스명"), removeClass("클래스명") 를 사용하여 동적으로 css 값 변경하기  
+   ==> 2addClassremoveClass.html
+
+3) mouseover 와 mouseout 를 합친 
+     선택자.hover(function(){}, function()());
+   ==> 3hover.html
+
+------------------chap6----------------------------------------
+1) 선택자에 대한 투명도 밝게 또는 흐리게 처리해주는 css의 'opacity' 속성 사용하기
+     선택자.css('opacity','0.2');
+   ==> 1opacity.html
+   
+2) 자바스크립트에서 배열 사용하기 
+   var pictureArr = ["kimth.jpg","iyou.jpg","parkby.jpg"];  
+    	 
+   var commentArr = new Array();
+    	
+   commentArr.push("1.성명 : <span class='name'>김태희</span>님<br/>2.나이: 44세"); 
+   commentArr.push("1.성명 : <span class='name'>아이유</span>님<br/>2.나이: 24세");
+   commentArr.push("1.성명 : <span class='name'>박보영</span>님<br/>2.나이: 34세"); 
+   ==> 2opacity.html
+       
+
+------------------chap7----------------------------------------
+1) 태그내용물 비우기   empty(),
+     태그삭제하기          remove(),  
+     태그내용물 추가하기 prepend(), append()
+   ==> prependAppendEmptyRemove.html 
+
+------------------chap8-------------------------------------------
+1) 선택자에 CSS 클래스명이 있으면 제거하고 선택자에 CSS 클래스명이 없으면 추가해주는 
+     선택자.toggleClass("클래스명");
+
+   $(".buttons>label").click(function() {
+    	$(this).toggleClass("changeButton");
+   });
+
+ // *** jQuery 에서 radio, checkbox 의 체크여부 확인하기 *** // 
+ /* 
+   $("input:checkbox[name=이름]").is(":checked");
+   ==> name 이 이름인 체크박스에 체크가 되었으면   true를 반환
+   ==> name 이 이름인 체크박스에 체크가 안되었으면 false를 반환
+   
+   $("input:radio[name=이름]").is(":checked");
+   ==> name 이 이름인 라디오에 체크가 되었으면   true를 반환
+   ==> name 이 이름인 라디오에 체크가 안되었으면 false를 반환
+ */
+ 
+ // *** name이 person 인 체크박스 모두선택 하기 ***//
+ // $("input:checkbox[name=person]").prop("checked", true);
+ 
+ // *** name이 person 인 체크박스 모두선택 하기 ***//
+ // $("input:checkbox[name=person]").prop("checked", false);
+
+ ==> toggleClassCheckboxRadioSelector.html  			
+
+------------------chap9----------------------------------------
+1) <div> 를 이용한 구역나눔 및 자바스크립트에서 객체를 사용하는 방법
+  ==> divTestObjectArray.html
+  CSS에서 선택자 {float: left;
+            /* max-width: 76%;
+               overflow-x: auto; */ 
+            /* min-width: 76%; */   
+          
+            /* height: 600px; */
+            /* max-height: 600px;
+               overflow-y: auto;  */
+               min-height: 600px;
+            }
+
+ === !!!! 중요 !!!! ===
+ <body> 태그속에 선언되어진 것이 아니라 
+  스크립트 소스내에서 선언되어진것을 선택자로 잡아서 속성을 부여할 경우  
+ ==> 일반적으로 선택자를 잡아서 사용하는 경우와 동일하다.
+	 $(".tdContent").css('opacity', 0.2);
+	 // opacity CSS 속성값 0(투명, 희미함) ~ 1(불투명, 원본색깔) 또는 0% ~ 100%
+	    
+
+ === !!!! 중요 !!!! ===
+ <body> 태그속에 선언되어진 것이 아니라 
+  스크립트 소스내에서 선언되어진것을 선택자로 잡아서 이벤트를 발생할 경우 *** 
+ ==> $(document).on("이벤트종류", "선택자", function(){ });
+	 $(document).on("mouseover",".tdMenu", function(){
+	   	var $target = $(event.target);
+	   	$target.addClass("tdFont");
+	   	// CSS에 동일한 속성명이 들어올 경우 우선순위에 따라 마지막에 들어온 속성명의 속성값이 적용된다. 
+	    	
+	    	for(var i=0; i<personArr.length; i++) {
+	    		if( $target.text() == personArr[i].name ) {
+	    			$(".picture"+i+"").html("<img src='images/"+personArr[i].largeimage+"' />");
+	    			$(".picture"+i+"").css('opacity', 1.0);
+	    		}
+	    	}// end of for---------------------------
+	 });
+
+  === 객체 배열 만들어 사용하기 ===
+  var personArr = [{name:"김태희", age:44, school:"서울대학교", image:"kimth.jpg", largeimage:"kimthLarge.jpg"}
+		          ,{name:"아이유", age:24, school:"인천대학교", image:"iyou.jpg", largeimage:"iyouLarge.jpg"}
+		          ,{name:"박보영", age:34, school:"수원대학교", image:"parkby.jpg", largeimage:"parkbyLarge.jpg"}];
+		           
+------------------chap10----------------------------------------
+1) 부트스트랩을 사용한 반응형웹페이지에 flip 효과 주기
+   ==> flipTest1Response.html
+   ==> flipTest2Response.html (flip 효과에 상세정보 보여주기)
+   ==> flipTest3ResponseAppendTo.html (부트스트랩을 사용한 반응형웹페이지에 flip 효과 주기(appendTo) )
+
+------------------chap11----------------------------------------
+1) fadeIn() 과 fadeOut() 를 사용한 프로필 더보기/ 프로필 감추기 
+   ==> fadeinFadeout.html
+2) slideUp() 과 slideDown() 를 사용한 프로필 더보기/ 프로필 감추기  
+   ==> slideUpslideDown.html 
+
+------------------chap12----------------------------------------
+1) 이미지 위치이동 하기[ animate(), slideUp() ]
+   ==> 1animateSlideup.html
+   
+2) 이미지 위치이동 하면서 서서히 투명도 주기[ fadeTo() ]
+   ==> 2animateFadeTo.html
+   
+3) 이미지 위치이동 하면서 위치이동 하는 동안 이미지 확대하기 [ animate() ]
+   ==> 3animateLarge.html
+   
+4) 이미지 위치이동 하면서 위치이동한 이후에 이벤트핸들링 함수 실행하기
+   ==> 4animateMove.html
+     
+5) 이미지 위치이동 무한 반복하기 [ 이벤트핸들러에 함수이름 부여하기, 반복적으로 오른쪽으로 이동되고 다시 왼쪽으로 이동 되게 하기 ]
+   ==> 5animateMove.html
+
+------------------chap13----------------------------------------
+1) 키보드 keydown, keyup 이벤트 구분하기			
+   ==> keydownKeyup.html
+
+------------------chap14----------------------------------------
+1) 이벤트 버블링 막기(이벤트 버블링 문제발생 해결 하지 못한것)
+   ==> 1eventBubblingFail.html
+
+2) 이벤트 버블링 막기(이벤트 버블링 문제발생 해결한것)   
+   ==> 2eventBubblingSuccess.html
+
+------------------부트스트랩--------------------------------------
+부트스트랩 Grid 예제
+==> bootstrapGridtest.html

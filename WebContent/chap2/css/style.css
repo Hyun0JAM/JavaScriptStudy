@@ -1,0 +1,46 @@
+@charset "UTF-8";
+body{
+	background-color:#efefef;
+}
+table{
+	border: 1px solid gray;
+	border-collapse: collapse;
+	width: 500px;
+	align:center;
+}
+td{
+	border: 1px solid gray;
+	text-align:center;
+	padding:10px;
+	font-size:120%;
+}
+img{
+	width:200px; 
+	height:200px;
+	padding: 0 30px;
+}
+#underline{
+	text-decoration:underline;
+}
+#name>td{
+	font-weight:bold;
+	font-size: 24px;
+}
+#name>td>span{
+	color:blue;
+	font-size:80%;
+}
+#radio>td{
+	font-size:130%;
+}
+#price>td{
+	color:red;
+	font-weight:bold;
+}
+#total{
+	color:maroon;
+}
+#price2>td{
+	color: navy;
+	font-weight:bold;
+}
